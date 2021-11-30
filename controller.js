@@ -10,7 +10,7 @@ exports.index = function(req, res){
 
 //menampilkan data 
 exports.tampilsemuadata =  function(req, res){
-    connection.query('SELECT * FROM ina219', function(error, rows, fileds){
+    connection.query('SELECT * FROM ina219', function(error, rows, fields){
         if (error){
             connection.log(error);
         }else{
@@ -23,7 +23,7 @@ exports.tampilsemuadata =  function(req, res){
 exports.tampilberdasarkanid = function(req, res){
     let id=req.params.id;
     connection.query('SELECT * FROM ina219 WHERE id = ?', [id],
-        function(error, rows, fileds){
+        function(error, rows, fields){
             if (error){
                 connection.log(error);
             }else{
@@ -31,3 +31,19 @@ exports.tampilberdasarkanid = function(req, res){
             }}
     );
 }
+
+//menambahkan data 
+exports.tambahdata=function(req, res){
+    var current = req.body.current;
+    var voltage = req.body.voltage;
+
+    connection.query('INSERT INTO ina219 (current, voltage) VALUES (?,?)',
+    [current, voltage],
+    function(error, rows, fields){
+        if (error){
+            connection.log(error);
+        }else{
+            response.ok("berhasil menambahkan data", res)
+        }
+    });
+};
