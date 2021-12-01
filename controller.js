@@ -10,7 +10,7 @@ exports.index = function(req, res){
 
 //menampilkan data 
 exports.tampilsemuadata =  function(req, res){
-    connection.query('SELECT * FROM ina219', function(error, rows, fields){
+    connection.query('SELECT * FROM data', function(error, rows, fields){
         if (error){
             connection.log(error);
         }else{
@@ -22,7 +22,7 @@ exports.tampilsemuadata =  function(req, res){
 //menampilkan semua data berdasarkan id
 exports.tampilberdasarkanid = function(req, res){
     let id=req.params.id;
-    connection.query('SELECT * FROM ina219 WHERE id = ?', [id],
+    connection.query('SELECT * FROM data WHERE id = ?', [id],
         function(error, rows, fields){
             if (error){
                 connection.log(error);
@@ -37,13 +37,44 @@ exports.tambahdata=function(req, res){
     var current = req.body.current;
     var voltage = req.body.voltage;
 
-    connection.query('INSERT INTO ina219 (current, voltage) VALUES (?,?)',
-    [current, voltage],
+    connection.query('INSERT INTO data (currentAC, voltageAC, currentDC, voltageDC, ) VALUES (?,?,?,?)',
+    [currentAC, voltageAC, currentDC, voltageDC,],
     function(error, rows, fields){
         if (error){
             connection.log(error);
         }else{
             response.ok("berhasil menambahkan data", res)
+        }
+    });
+};
+
+//mengubah data berdasarkan id
+exports.ubahdata = function (req, res){
+    var id = req.body.id;
+    var current = req.body.current;
+    var voltage = req.body.voltage;
+
+    connection.query('UPDATE data SET currentAC=?, voltageAC=?, currentDC=?, voltageDC=? WHERE id=?', 
+    [id, currentAC, voltageAC, currentDC, voltageDC],
+    function(error, rows, fields){
+        if (error){
+            connection.log(error);
+        }else{
+            response.ok("berhasil mengubah data", res)
+        }
+    });
+};
+
+//menghapus data
+exports.hapusdata = function(req, res){
+    var id = req.body.id;
+    
+    connection.query('DELETE FROM data WHERE id=?', [id],
+    function(error, rows, fields){
+        if (error){
+            connection.log(error);
+        }else{
+            response.ok("berhasil menghapus data", res)
         }
     });
 };

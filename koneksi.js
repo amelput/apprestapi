@@ -2,10 +2,10 @@ var mysql = require('mysql');
 
 //buat koneksi database
 const conn=mysql.createConnection({
-    host: 'localhost',
-    user:'root',
-    password: '',
-    database: 'arduino_sensor'
+    host: 'dbkelompoka.gmedia.bz',
+    user:'gmedia_magangb',
+    password: 'indo1945!merdeka',
+    database: 'gmedia_magangb'
 });
 
 conn.connect((err)=> {
